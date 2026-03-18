@@ -2,6 +2,8 @@
 
 This repo is structured as a Pi package that adds a per-run elapsed timer inline in Pi's footer.
 
+Demo video: [example.mp4](https://raw.githubusercontent.com/jojopirker/pi-timer/main/example.mp4)
+
 ## Layout
 
 - `extensions/run-timer.ts` - package entrypoint for npm or `pi install`
@@ -45,7 +47,7 @@ pi install /absolute/path/to/pi-timer
 Once published to npm:
 
 ```bash
-pi install npm:pi-agent-run-timer
+pi install npm:pi-timer
 ```
 
 ## Publish on npm
@@ -54,12 +56,13 @@ The package manifest is in `package.json` and uses Pi's package conventions:
 
 - `keywords: ["pi-package"]` makes it discoverable as a Pi package
 - `pi.extensions` points Pi at `extensions/*.ts`
+- `pi.video` points at the demo MP4 hosted in this GitHub repo
 - the package ships raw TypeScript, which Pi loads through `jiti`
 
 Before publishing:
 
-1. Change the `name` in `package.json` if `pi-agent-run-timer` is unavailable on npm.
-2. Set your preferred `license`.
+1. Keep the `name` in `package.json` as `pi-timer`, unless you decide to publish under a different npm package name.
+2. Push `example.mp4` and the metadata changes to `main`, so the video URL is live.
 3. Run `npm publish`.
 
 ## Notes

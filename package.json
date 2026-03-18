@@ -1,5 +1,5 @@
 {
-  "name": "pi-agent-run-timer",
+  "name": "pi-timer",
   "version": "0.1.0",
   "description": "Pi package that shows a per-run elapsed timer inline in the footer.",
   "type": "module",
@@ -8,15 +8,27 @@
     "pi-extension",
     "timer"
   ],
-  "license": "UNLICENSED",
+  "author": "jojopirker",
+  "license": "MIT",
   "files": [
     "extensions",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "example.mp4"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jojopirker/pi-timer.git"
+  },
+  "homepage": "https://github.com/jojopirker/pi-timer#readme",
+  "bugs": {
+    "url": "https://github.com/jojopirker/pi-timer/issues"
+  },
   "pi": {
     "extensions": [
       "./extensions/*.ts"
-    ]
+    ],
+    "video": "https://raw.githubusercontent.com/jojopirker/pi-timer/main/example.mp4"
   },
   "peerDependencies": {
     "@mariozechner/pi-ai": "*",
