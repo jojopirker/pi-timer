@@ -1,6 +1,6 @@
 {
   "name": "pi-timer",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Pi package that shows a per-run elapsed timer inline in the footer.",
   "type": "module",
   "keywords": [
@@ -26,7 +26,7 @@
   },
   "pi": {
     "extensions": [
-      "./extensions/*.ts"
+      "./extensions"
     ],
     "video": "https://raw.githubusercontent.com/jojopirker/pi-timer/main/example.mp4"
   },
