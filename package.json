@@ -1,0 +1,29 @@
+{
+  "name": "pi-agent-run-timer",
+  "version": "0.1.0",
+  "description": "Pi package that shows a per-run elapsed timer inline in the footer.",
+  "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "timer"
+  ],
+  "license": "UNLICENSED",
+  "files": [
+    "extensions",
+    "README.md"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions/*.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-ai": "*",
+    "@mariozechner/pi-coding-agent": "*",
+    "@mariozechner/pi-tui": "*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
