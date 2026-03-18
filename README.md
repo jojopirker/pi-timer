@@ -48,11 +48,11 @@ pi -e .
 
 If Pi is already running, use `/reload` after edits.
 
-## Publish
+## Issues
 
-1. Push `example.mp4` and the current metadata to `main`, so the video URL is live.
-2. Run `npm login`.
-3. Run `npm publish --access public`.
+If you hit a bug or want to request a feature, open an issue:
+
+[github.com/jojopirker/pi-timer/issues](https://github.com/jojopirker/pi-timer/issues)
 
 ## Notes
 
