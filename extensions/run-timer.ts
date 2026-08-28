@@ -1,6 +1,6 @@
-import type { AssistantMessage, Model } from "@mariozechner/pi-ai";
-import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
-import { truncateToWidth, visibleWidth } from "@mariozechner/pi-tui";
+import type { AssistantMessage, Model } from "@earendil-works/pi-ai";
+import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
 const TICK_INTERVAL_MS = 1000;
 const AUTO_COMPACT_LABEL = " (auto)";
@@ -210,11 +210,6 @@ export default function (pi: ExtensionAPI) {
 	}
 
 	pi.on("session_start", async (_event, ctx) => {
-		resetRun();
-		installFooter(ctx);
-	});
-
-	pi.on("session_switch", async (_event, ctx) => {
 		resetRun();
 		installFooter(ctx);
 	});
