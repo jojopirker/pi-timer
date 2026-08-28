@@ -86,6 +86,14 @@ export default function (pi: ExtensionAPI) {
 		usingSubscription = currentModel ? ctx.modelRegistry.isUsingOAuth(currentModel) : false;
 	}
 
+	function formatModelLabel(): string {
+		const modelName = currentModel?.id || "no-model";
+		if (!currentModel?.reasoning) return modelName;
+
+		const thinkingLevel = pi.getThinkingLevel();
+		return thinkingLevel === "off" ? `${modelName} • thinking off` : `${modelName} • ${thinkingLevel}`;
+	}
+
 	function installFooter(ctx: ExtensionContext) {
 		syncModelState(ctx);
 
@@ -162,9 +170,10 @@ export default function (pi: ExtensionAPI) {
 						leftWidth = visibleWidth(left);
 					}
 
-					let right = theme.fg("dim", currentModel?.id || "no-model");
+					const modelLabel = formatModelLabel();
+					let right = theme.fg("dim", modelLabel);
 					if (footerData.getAvailableProviderCount() > 1 && currentModel) {
-						const withProvider = theme.fg("dim", `(${currentModel.provider}) ${currentModel.id}`);
+						const withProvider = theme.fg("dim", `(${currentModel.provider}) ${modelLabel}`);
 						if (leftWidth + 2 + visibleWidth(withProvider) <= width) {
 							right = withProvider;
 						}
@@ -213,6 +222,10 @@ export default function (pi: ExtensionAPI) {
 	pi.on("model_select", async (_event, ctx) => {
 		syncModelState(ctx);
 		installFooter(ctx);
+	});
+
+	pi.on("thinking_level_select", async () => {
+		triggerRender();
 	});
 
 	pi.on("agent_start", async (_event, ctx) => {
