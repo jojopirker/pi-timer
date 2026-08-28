@@ -1,0 +1,67 @@
+name: Publish PR footer screenshots
+
+on:
+  workflow_run:
+    workflows: [PR footer screenshots]
+    types: [completed]
+
+permissions:
+  actions: read
+  contents: write
+  pull-requests: write
+
+jobs:
+  publish:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: footer-screenshots
+          path: screenshots
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate screenshots
+        run: |
+          python -m pip install --disable-pip-version-check pillow==11.3.0
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+
+          source = Path("screenshots")
+          target = Path("validated")
+          target.mkdir()
+          expected = {"footer-idle.png", "footer-active.png", "footer-complete.png"}
+          actual = {path.name for path in source.glob("*.png")}
+          if actual != expected:
+              raise SystemExit(f"Unexpected screenshot set: {sorted(actual)}")
+
+          for filename in sorted(expected):
+              path = source / filename
+              with Image.open(path) as image:
+                  image.load()
+                  if image.format != "PNG" or image.width > 2000 or image.height > 1000:
+                      raise SystemExit(f"Invalid screenshot: {filename}")
+                  image.convert("RGB").save(target / filename, format="PNG", optimize=True)
+          PY
+
+      - name: Publish screenshots and update PR comment
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          SCREENSHOT_BRANCH: ci-footer-screenshots
+          SCREENSHOT_DIRECTORY: validated
+        run: node .github/scripts/publish-footer-screenshots.mjs
