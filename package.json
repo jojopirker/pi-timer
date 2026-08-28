@@ -1,6 +1,6 @@
 {
   "name": "pi-timer",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Pi package that shows a per-run elapsed timer inline in the footer.",
   "type": "module",
   "keywords": [
